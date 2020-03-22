@@ -10,26 +10,26 @@ import static java.util.Collections.addAll;
 import static java.util.stream.Collectors.toList;
 
 @DomainService
-public class KanaSyllablesSplitter {
-  private final Syllables syllablesOfOneCharacters;
+public class HiraganaSyllabarySplitter {
+  private final Syllables syllablesOfOneCharacter;
   private final Syllables syllablesOfTwoCharacters;
   private final Syllables syllablesOfThreeCharacters;
 
-  public KanaSyllablesSplitter(KanaDictionary kanaDictionary) {
-    syllablesOfOneCharacters = kanaDictionary.syllablesWithLength(1);
-    syllablesOfTwoCharacters = kanaDictionary.syllablesWithLength(2);
-    syllablesOfThreeCharacters = kanaDictionary.syllablesWithLength(3);
+  public HiraganaSyllabarySplitter(HiraganaToKanaReferential hiraganaToKanaReferential) {
+    syllablesOfOneCharacter = hiraganaToKanaReferential.syllablesWithLength(1);
+    syllablesOfTwoCharacters = hiraganaToKanaReferential.syllablesWithLength(2);
+    syllablesOfThreeCharacters = hiraganaToKanaReferential.syllablesWithLength(3);
   }
 
   public Syllables split(String word) {
 
-    List<TranslatableSyllable> translatableSyllables3 = syllablesOfThreeCharacters.isContainingIn(word);
-    word = removeSyllables(translatableSyllables3, word);
-    List<TranslatableSyllable> translatableSyllables2 = syllablesOfTwoCharacters.isContainingIn(word);
-    word = removeSyllables(translatableSyllables2, word);
-    List<TranslatableSyllable> translatableSyllables1 = syllablesOfOneCharacters.isContainingIn(word);
+    List<TranslatableSyllable> translatableSyllablesOfTheeCharacters = syllablesOfThreeCharacters.isContainingIn(word);
+    word = removeSyllablesOf(word, translatableSyllablesOfTheeCharacters);
+    List<TranslatableSyllable> translatableSyllablesOfTwoCharacters = syllablesOfTwoCharacters.isContainingIn(word);
+    word = removeSyllablesOf(word, translatableSyllablesOfTwoCharacters);
+    List<TranslatableSyllable> translatableSyllablesOfOneCharacter = syllablesOfOneCharacter.isContainingIn(word);
 
-    List<Syllable> orderedSyllables = concat(translatableSyllables1, translatableSyllables2, translatableSyllables3).stream()
+    List<Syllable> orderedSyllables = concat(translatableSyllablesOfOneCharacter, translatableSyllablesOfTwoCharacters, translatableSyllablesOfTheeCharacters).stream()
             .sorted()
             .map(TranslatableSyllable::getSyllable)
             .collect(toList());
@@ -45,7 +45,7 @@ public class KanaSyllablesSplitter {
     return finalSyllables;
   }
 
-  private String removeSyllables(List<TranslatableSyllable> translatableSyllables, String word) {
+  private String removeSyllablesOf(String word, List<TranslatableSyllable> translatableSyllables) {
     return translatableSyllables.stream()
             .map(TranslatableSyllable::getSyllable)
             .map(syllable -> syllable.map(Function.identity()))

@@ -1,8 +1,8 @@
 package io.shodo.kata.kanas.infra;
 
 import io.shodo.kata.kanas.annotations.Provider;
+import io.shodo.kata.kanas.domain.HiraganaToKanaReferential;
 import io.shodo.kata.kanas.domain.Kana;
-import io.shodo.kata.kanas.domain.KanaDictionary;
 import io.shodo.kata.kanas.domain.Syllable;
 import io.shodo.kata.kanas.domain.Syllables;
 
@@ -11,10 +11,10 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 @Provider
-public class KanasHiraganaSyllabary implements KanaDictionary {
+public class HiraganaSyllabaryToKanas implements HiraganaToKanaReferential {
   private final Map<Syllable, Kana> dictionary;
 
-  public KanasHiraganaSyllabary() {
+  public HiraganaSyllabaryToKanas() {
     this.dictionary = Map.ofEntries(
             Map.entry(Syllable.of("a"), Kana.of("あ")),
             Map.entry(Syllable.of("i"), Kana.of("い")),

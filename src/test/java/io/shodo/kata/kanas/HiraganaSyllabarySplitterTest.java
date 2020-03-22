@@ -1,16 +1,16 @@
 package io.shodo.kata.kanas;
 
-import io.shodo.kata.kanas.domain.KanaDictionary;
-import io.shodo.kata.kanas.domain.KanaSyllablesSplitter;
+import io.shodo.kata.kanas.domain.HiraganaSyllabarySplitter;
+import io.shodo.kata.kanas.domain.HiraganaToKanaReferential;
 import io.shodo.kata.kanas.domain.Syllables;
-import io.shodo.kata.kanas.infra.KanasHiraganaSyllabary;
+import io.shodo.kata.kanas.infra.HiraganaSyllabaryToKanas;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class KanaSyllablesSplitterTest {
-  private final KanaDictionary kanaDictionary = new KanasHiraganaSyllabary();
-  private final KanaSyllablesSplitter kanaSyllableSplitter = new KanaSyllablesSplitter(kanaDictionary);
+class HiraganaSyllabarySplitterTest {
+  private final HiraganaToKanaReferential hiraganaToKanaReferential = new HiraganaSyllabaryToKanas();
+  private final HiraganaSyllabarySplitter kanaSyllableSplitter = new HiraganaSyllabarySplitter(hiraganaToKanaReferential);
 
   @Test
   void should_not_split_one_character() {
